@@ -1,15 +1,15 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { User } from "../types/user";
 import { Model } from "mongoose";
 import { RegisterDTO } from "../dto/register-dto";
 import { LoginDTO } from "../dto/login-dto";
 import * as bcrypt from "bcrypt";
+import { User } from "src/types/user";
 
 @Injectable()
 export class UserService {
-  private omitPassword(user: User) {
-    return user.depopulate("password");
+  private omitPassword(username: string) {
+    return this.userModel.findOne({ username }).select('-password');
   }
 
   constructor(@InjectModel("User") private userModel: Model<User>) {
@@ -25,7 +25,7 @@ export class UserService {
 
     await createdUser.save();
 
-    return this.omitPassword(createdUser);
+    return this.omitPassword(username);
   }
 
   async findByLogin(userDTO: LoginDTO):Promise<User> {
@@ -36,9 +36,13 @@ export class UserService {
       throw new HttpException("Invalid credintial!", HttpStatus.UNAUTHORIZED);
     }
     if (await bcrypt.compare(password, user.password)) {
-      return this.omitPassword(user);
+      return this.omitPassword(username);
     }else {
       throw new HttpException("Invalid credintial!", HttpStatus.UNAUTHORIZED);
     }
+  }
+  async findByPayload(payload:any){
+    const { username } = payload;
+    return this.userModel.findOne({ username });
   }
 }

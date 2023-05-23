@@ -1,17 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import { sign } from 'jsonwebtoken';
+import { UserService } from 'src/shared/user.service';
 
 @Injectable()
 export class AuthService {
+  constructor(
+    private userService: UserService
+  ) {}
 
-  findAll() {
-    return `This action returns all auth`;
+  async signPayload(payload: any) {
+    return await sign(payload,'secretKey',{expiresIn: '7h' });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+  async validateUser(payload: any) {
+    return await this.userService.findByPayload(payload);
   }
 }
