@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDTO } from "../dto/register-dto";
 import { LoginDTO } from "../dto/login-dto";
@@ -13,6 +13,7 @@ export class AuthController {
   ) {}
 
   @Post('register')
+  @UsePipes(new ValidationPipe())
   async register(@Body() userDTO: RegisterDTO) {
     const user = await this.userService.create(userDTO);
 
@@ -23,12 +24,9 @@ export class AuthController {
 
     return{ user, token };
   }
-  @Get('check')
-  @UseGuards(AuthGuard('jwt'))
-  async check(){
-    return 'authorized';
-  }
+  
   @Post('login')
+  @UsePipes(new ValidationPipe())
   async login(@Body() userDTO: LoginDTO) {
     const user = await this.userService.findByLogin(userDTO);
 
