@@ -1,4 +1,4 @@
-import path from "path";
+import * as path from "path";
 
 
 export const editedFileName = (req: any, file: any, callback: any) => {

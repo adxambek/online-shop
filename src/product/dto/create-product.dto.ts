@@ -13,7 +13,7 @@ export class CreateProductDTO {
     description: string;
 
 
-     //@ApiProperty()
+    @ApiProperty()
     //@IsNotEmpty()
     image: string;
     

@@ -23,9 +23,7 @@ export class ProductController {
     })
   )
   async create(@Body() productDTO: CreateProductDTO, @UploadedFile() image: Express.Multer.File) {
-    console.log(image);
-    productDTO.image = image.fieldname;
-    
+    productDTO.image= image.filename;    
     return await this.productService.create(productDTO);
   }
 
