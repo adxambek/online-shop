@@ -5,6 +5,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Product } from "src/types/product";
 import * as fs from "fs";
+import { QueryProductDTO } from "./dto/query-product-dto";
 
 @Injectable()
 export class ProductService {
@@ -19,8 +20,18 @@ export class ProductService {
     return await this.productModel.create(productDTO);
   }
 
-  async findAll() {
-    return await this.productModel.find();
+  async findAll(query: QueryProductDTO) {
+    const queryObject = query.search ? {
+      title: {
+        $regex: query.search,
+        $options: "i"
+      }
+    } : {};
+    const limit = Number(query.limit || 12);
+    const skip = (Number(query.page || 1) - 1) * limit;
+    return await this.productModel.find(queryObject)
+      .limit(limit)
+      .skip(skip);
   }
 
   async findOne(id: string) {
@@ -42,7 +53,7 @@ export class ProductService {
         return await product.updateOne(productDTO);
       });
     }
-    return await product.updateOne(productDTO)
+    return await product.updateOne(productDTO);
     // return await this.productModel.findOneAndUpdate({ _id: id }, productDTO);
   }
 
@@ -50,3 +61,6 @@ export class ProductService {
     return await this.productModel.deleteOne({ _id: id });
   }
 }
+
+
+
