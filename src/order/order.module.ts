@@ -1,6 +1,6 @@
-import { Module } from '@nestjs/common';
-import { OrderService } from './order.service';
-import { OrderController } from './order.controller';
+import { Module } from "@nestjs/common";
+import { OrderService } from "./order.service";
+import { OrderController } from "./order.controller";
 import { MongooseModule } from "@nestjs/mongoose";
 import { OrderSchema } from "../models/order.schema";
 import { SharedModule } from "../shared/shared.module";
@@ -8,7 +8,7 @@ import { SharedModule } from "../shared/shared.module";
 @Module({
   imports: [
     MongooseModule.forFeature([{
-      name: 'Order',
+      name: "Order",
       schema: OrderSchema
     }]),
     SharedModule
@@ -16,4 +16,5 @@ import { SharedModule } from "../shared/shared.module";
   controllers: [OrderController],
   providers: [OrderService]
 })
-export class OrderModule {}
+export class OrderModule {
+}

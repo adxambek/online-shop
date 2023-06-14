@@ -6,7 +6,7 @@ interface ProductOrder {
   quantity: number
 }
 
-export interface Order extends Document{
+export interface Order extends Document {
   owner: User,
   totalPrice: string,
   products: ProductOrder[]

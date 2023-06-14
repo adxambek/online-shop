@@ -9,7 +9,7 @@ import { User } from "src/types/user";
 @Injectable()
 export class UserService {
   private omitPassword(username: string) {
-    return this.userModel.findOne({ username }).select('-password');
+    return this.userModel.findOne({ username }).select("-password");
   }
 
   constructor(@InjectModel("User") private userModel: Model<User>) {
@@ -28,7 +28,7 @@ export class UserService {
     return this.omitPassword(username);
   }
 
-  async findByLogin(userDTO: LoginDTO):Promise<User> {
+  async findByLogin(userDTO: LoginDTO): Promise<User> {
     const { username, password } = userDTO;
     const user = await this.userModel.findOne({ username });
 
@@ -37,11 +37,12 @@ export class UserService {
     }
     if (await bcrypt.compare(password, user.password)) {
       return this.omitPassword(username);
-    }else {
+    } else {
       throw new HttpException("Invalid credintial!", HttpStatus.UNAUTHORIZED);
     }
   }
-  async findByPayload(payload:any){
+
+  async findByPayload(payload: any) {
     const { username } = payload;
     return this.userModel.findOne({ username });
   }

@@ -1,5 +1,5 @@
 import { HttpException, Module } from "@nestjs/common";
-import { UserService } from './user.service';
+import { UserService } from "./user.service";
 import { MongooseModule } from "@nestjs/mongoose";
 import { UserSchema } from "../models/user.schema";
 import { APP_FILTER } from "@nestjs/core";
@@ -7,7 +7,7 @@ import { APP_FILTER } from "@nestjs/core";
 @Module({
   imports: [
     MongooseModule.forFeature([{
-      name: 'User',
+      name: "User",
       schema: UserSchema
     }])
   ],
@@ -22,4 +22,5 @@ import { APP_FILTER } from "@nestjs/core";
     UserService
   ]
 })
-export class SharedModule {}
+export class SharedModule {
+}

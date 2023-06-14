@@ -1,16 +1,16 @@
-import { Module } from '@nestjs/common';
-import { ProductService } from './product.service';
-import { ProductController } from './product.controller';
-import { MongooseModule } from '@nestjs/mongoose';
-import { ProductSchema } from 'src/models/product.schema';
+import { Module } from "@nestjs/common";
+import { ProductService } from "./product.service";
+import { ProductController } from "./product.controller";
+import { MongooseModule } from "@nestjs/mongoose";
+import { ProductSchema } from "src/models/product.schema";
 import { SharedModule } from "../shared/shared.module";
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       {
-        name: 'Product',
-        schema: ProductSchema,
+        name: "Product",
+        schema: ProductSchema
       }
     ]),
     SharedModule
@@ -18,4 +18,5 @@ import { SharedModule } from "../shared/shared.module";
   controllers: [ProductController],
   providers: [ProductService]
 })
-export class ProductModule {}
+export class ProductModule {
+}

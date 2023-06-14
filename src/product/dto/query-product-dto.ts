@@ -13,7 +13,7 @@ export class QueryProductDTO {
     description: "Current page",
     required: false
   })
-  page: number
+  page: number;
 
   @ApiProperty({
     type: Number,

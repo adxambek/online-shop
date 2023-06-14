@@ -1,6 +1,7 @@
-import {Document} from "mongoose";
+import { Document } from "mongoose";
 import { User } from "./user";
-export interface Product extends Document{
+
+export interface Product extends Document {
   title: string,
   description: string,
   image: string,

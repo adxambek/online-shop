@@ -9,11 +9,11 @@ export class RegisterDTO {
   @IsNotEmpty()
   @MinLength(6)
   password: string;
-  
+
   @IsString()
   @IsNotEmpty()
   region: string;
-  
+
   @IsString()
   @IsNotEmpty()
   @IsOptional()
